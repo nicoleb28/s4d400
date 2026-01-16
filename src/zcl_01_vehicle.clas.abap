@@ -1,39 +1,57 @@
 CLASS zcl_01_vehicle DEFINITION
   PUBLIC
-  FINAL
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
-  PUBLIC SECTION. "Zugriffsmodifikator public
-    METHODS set_make
-      IMPORTING make TYPE string.
-    METHODS: get_model RETURNING value(model) TYPE string,
-             set_model IMPORTING model TYPE string,
-             get_make RETURNING value(make) TYPE string.
+  PUBLIC SECTION.
+    METHODS constructor IMPORTING make  TYPE string
+                                  model TYPE string.
 
-  PROTECTED SECTION. "Zugriffsmodifikator protected
-  PRIVATE SECTION. "Zugriffsmodifikator private
-    DATA make TYPE string.
-    DATA model TYPE string.
-    DATA speed_in_kmh TYPE i.
+    METHODS accelerate IMPORTING !value TYPE i
+                       RAISING   zcx_00_value_too_high.
+
+    METHODS brake IMPORTING !value TYPE i
+                  RAISING   zcx_00_value_too_high.
+
+    METHODS to_string RETURNING VALUE(string) TYPE string.
+
+    DATA make         TYPE string READ-ONLY.
+    DATA model        TYPE string READ-ONLY.
+    DATA speed_in_kmh TYPE i      READ-ONLY.
+
+    CLASS-DATA number_of_vehicles TYPE i READ-ONLY.
+
+  PROTECTED SECTION.
+
+  PRIVATE SECTION.
 
 ENDCLASS.
 
 
-
 CLASS zcl_01_vehicle IMPLEMENTATION.
-  METHOD set_make.
-    me->make = make.
-  ENDMETHOD.
-  METHOD get_model.
-    model = me->model.
+  METHOD accelerate.
+    IF speed_in_kmh + value > 300.
+      RAISE EXCEPTION NEW zcx_00_value_too_high( value = value ).
+    ENDIF.
+
+    speed_in_kmh += value.
   ENDMETHOD.
 
-  METHOD set_model.
+  METHOD brake.
+    IF value > speed_in_kmh.
+      RAISE EXCEPTION NEW zcx_00_value_too_high( value = value ).
+    ENDIF.
+
+    speed_in_kmh -= value.
+  ENDMETHOD.
+
+  METHOD constructor.
+    me->make  = make.
     me->model = model.
+
+    number_of_vehicles += 1.
   ENDMETHOD.
 
-  METHOD get_make.
-    make = me->make.
+  METHOD to_string.
+    string = |{ make } { model } ({ speed_in_kmh }km/h)|.
   ENDMETHOD.
-
 ENDCLASS.

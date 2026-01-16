@@ -17,24 +17,41 @@ CLASS zcl_01_main_vehicles IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
     "Deklarationen
-    DATA vehicle TYPE REF TO zcl_00_vehicle.
-    DATA vehicles TYPE TABLE OF REF TO zcl_00_vehicle.
+    DATA vehicle TYPE REF TO zcl_01_vehicle.
+    DATA vehicles TYPE TABLE OF REF TO zcl_01_vehicle.
+    DATA truck TYPE REF TO zcl_01_truck.
 
     "Instanziierungen (Objecterzeugungen)
-    vehicle = NEW #( make = 'Porsche' model = '911' ). "Fahrzeug wird erzeugt (Referenz)
+    out->write( zcl_01_vehicle=>number_of_vehicles ).
+
+    vehicle = NEW zcl_01_truck( make = 'Porsche' model = '911' cargo_in_tons = 5 ). "Fahrzeug wird erzeugt (Referenz)
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make = 'MAN' model = 'TGX' ).
+    vehicle = NEW zcl_01_car( make = 'MAN' model = 'TGX' seats = 3 ).
     APPEND vehicle TO vehicles.
 
-    vehicle = NEW #( make = 'Skoda' model = 'Superb Combi' ).
+    vehicle = NEW zcl_01_car( make = 'Skoda' model = 'Superb Combi' seats = 5 ).
     APPEND vehicle TO vehicles.
-  "Ausgabe
+
+    "Ausgabe
+    out->write( zcl_01_airplane=>number_of_airplanes ).
     LOOP AT vehicles INTO vehicle.
-    vehicle->accelerate( 30 ).
-    vehicle->accelerate( 10 ).
-    vehicle->accelerate( 100 ).
-      out->write( | { vehicle->make } { vehicle->model } { vehicle->speed_in_kmh } km/h | ).
+      TRY.
+          vehicle->accelerate( 30 ).
+          vehicle->accelerate( 10 ).
+          vehicle->accelerate( 100 ).
+        CATCH zcx_01_value_too_high INTO DATA(x).
+          out->write( | { vehicle->make } { vehicle->model } { vehicle->speed_in_kmh } km/h | ).
+      ENDTRY.
+      IF vehicle IS INSTANCE OF zcl_01_truck.
+        truck = CAST #( vehicle ). "Truck truck = (Truck) vehicle -> Downcast
+        truck->transform( ).
+        out->write( | { COND #( WHEN truck->is_transformed = 'X' THEN 'Der LKW hat sich in  einen Autobot transformiert'
+        ELSE 'Der Autobot hat sich wieder in einen LKW transformiert' ) } | ).
+      ENDIF.
+      out->write( vehicle->to_string( ) ).
+
+
     ENDLOOP.
   ENDMETHOD.
 ENDCLASS.

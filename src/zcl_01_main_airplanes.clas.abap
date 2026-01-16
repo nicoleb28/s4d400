@@ -1,0 +1,47 @@
+CLASS zcl_01_main_airplanes DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_oo_adt_classrun .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_01_main_airplanes IMPLEMENTATION.
+
+
+  METHOD if_oo_adt_classrun~main.
+    DATA airplane TYPE REF TO zcl_01_airplane.
+    DATA airplanes TYPE TABLE OF REF TO zcl_01_airplane.
+
+    airplane = NEW #(  ).
+    airplane->set_id( 'D-ABUK' ).
+    airplane->set_plan_type( 'Airbus A380-800' ).
+    airplane->set_empty_weight_in_tons( 277 ).
+    APPEND airplane TO airplanes.
+
+    airplane = NEW #(  ).
+    airplane->set_id( 'D-AIND' ).
+    airplane->set_plan_type( 'Airbus A320-200' ).
+    airplane->set_empty_weight_in_tons( 42 ).
+    APPEND airplane TO airplanes.
+
+    airplane = NEW #(  ).
+    airplane->set_id( 'D-AJKF' ).
+    airplane->set_plan_type( 'Boeing 747-400F' ).
+    airplane->set_empty_weight_in_tons( 166 ).
+    APPEND airplane TO airplanes.
+
+    LOOP AT airplanes INTO airplane.
+      out->write( | { airplane->get_id( ) }, { airplane->get_plan_type( ) }, { airplane->get_empty_weight_in_tons( ) }t | ).
+    ENDLOOP.
+
+
+
+  ENDMETHOD.
+ENDCLASS.
