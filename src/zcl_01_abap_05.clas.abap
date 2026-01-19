@@ -1,24 +1,13 @@
-CLASS zcl_01_abap_05 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_01_ABAP_05 definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_01_abap_05 IMPLEMENTATION.
-
-  METHOD if_oo_adt_classrun~main.
-
-  DATA(customer) = ZCL_ABAP_HELPER=>get_customer( customer_id = '100').
-  out->write( customer ).
-
-
-  ENDMETHOD.
+CLASS ZCL_01_ABAP_05 IMPLEMENTATION.
 ENDCLASS.

@@ -1,25 +1,13 @@
-CLASS zcl_01_abap_07 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_01_ABAP_07 definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_01_abap_07 IMPLEMENTATION.
-
-
-  METHOD if_oo_adt_classrun~main.
-
-
-    out->write( zcl_01_abap_06=>get_travels( '0440' ) ).
-
-
-  ENDMETHOD.
+CLASS ZCL_01_ABAP_07 IMPLEMENTATION.
 ENDCLASS.

@@ -1,15 +1,36 @@
-class ZCL_01_PASSENGER_PLANE definition
-  public
-  inheriting from ZCL_01_AIRPLANE
-  final
-  create public .
+CLASS zcl_01_passenger_plane DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_01_airplane
+  CREATE PUBLIC.
 
-public section.
-protected section.
-private section.
+  PUBLIC SECTION.
+    DATA number_of_seats TYPE i READ-ONLY.
+
+    METHODS constructor
+      IMPORTING !id                  TYPE string
+                plane_type           TYPE string
+                empty_weight_in_tons TYPE i
+                number_of_seats      TYPE i
+      RAISING   zcx_abap_initial_parameter.
+
+    METHODS get_total_weight_in_tons REDEFINITION.
+
+  PROTECTED SECTION.
+
+  PRIVATE SECTION.
+
 ENDCLASS.
 
 
+CLASS zcl_01_passenger_plane IMPLEMENTATION.
+  METHOD constructor.
+    super->constructor( id                   = id
+                        plane_type           = plane_type
+                        empty_weight_in_tons = empty_weight_in_tons ).
+    me->number_of_seats = number_of_seats.
+  ENDMETHOD.
 
-CLASS ZCL_01_PASSENGER_PLANE IMPLEMENTATION.
+  METHOD get_total_weight_in_tons.
+    total_weight_in_tons = empty_weight_in_tons * '1.1' + number_of_seats * '0.08'.
+  ENDMETHOD.
 ENDCLASS.

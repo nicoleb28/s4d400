@@ -1,18 +1,18 @@
 CLASS zcl_01_vehicle DEFINITION
-  PUBLIC
+  PUBLIC ABSTRACT "Keine Objecte instanzzieren
   CREATE PUBLIC.
 
   PUBLIC SECTION.
     METHODS constructor IMPORTING make  TYPE string
                                   model TYPE string.
+    "Überschreibung wird verhindert
+    METHODS accelerate FINAL IMPORTING !value TYPE i
+                             RAISING   zcx_00_value_too_high.
 
-    METHODS accelerate IMPORTING !value TYPE i
-                       RAISING   zcx_00_value_too_high.
+    METHODS brake FINAL IMPORTING !value TYPE i
+                        RAISING   zcx_00_value_too_high.
 
-    METHODS brake IMPORTING !value TYPE i
-                  RAISING   zcx_00_value_too_high.
-
-    METHODS to_string RETURNING VALUE(string) TYPE string.
+    METHODS to_string ABSTRACT RETURNING VALUE(string) TYPE string.
 
     DATA make         TYPE string READ-ONLY.
     DATA model        TYPE string READ-ONLY.
@@ -51,7 +51,5 @@ CLASS zcl_01_vehicle IMPLEMENTATION.
     number_of_vehicles += 1.
   ENDMETHOD.
 
-  METHOD to_string.
-    string = |{ make } { model } ({ speed_in_kmh }km/h)|.
-  ENDMETHOD.
+
 ENDCLASS.

@@ -14,7 +14,7 @@ CLASS zcl_01_truck DEFINITION
 
     METHODS to_string REDEFINITION.
 
-    METHODS transform returning value(is_transformed) type string.
+    METHODS transform RETURNING VALUE(is_transformed) TYPE string.
 
   PROTECTED SECTION.
 
@@ -30,7 +30,10 @@ CLASS zcl_01_truck IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD to_string.
-    string = super->to_string( ).
+    string = |Ich bin ein { COND #( WHEN is_transformed = 'X'
+    THEN 'Autobot'
+    ELSE 'LKW') } |.
+*   string = super->to_string( ).
     string &&= |, Frachtkapazität: { cargo_in_tons }t|.
   ENDMETHOD.
 
