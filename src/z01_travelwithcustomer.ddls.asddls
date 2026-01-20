@@ -5,15 +5,13 @@
 @EndUserText.label: 'Travel with Customer'
 
 define view entity Z01_TravelWithCustomer
-  as select from Z00_Customer                     as c
+  as select from Z01_Customer                     as c
 
-    inner join   Z01_Travel                       as t
-      on c.CustomerId = t.CustomerId
+    inner join   Z01_Travel                       as t on c.CustomerId = t.CustomerId
 
     inner join   DDCDS_CUSTOMER_DOMAIN_VALUE_T(
-                   p_domain_name : '/DMO/STATUS') as s
-      on  s.value_low = t.Status
-      and s.language  = $session.system_language
+                   p_domain_name : '/DMO/STATUS') as s on  s.value_low = t.Status
+                                                       and s.language  = $session.system_language
 
 {
   key t.TravelId,
@@ -61,4 +59,6 @@ define view entity Z01_TravelWithCustomer
       c.City
 }
 
-where c.CountryCode = 'DE'
+where
+  c.CountryCode = 'DE'
+
