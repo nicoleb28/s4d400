@@ -1,0 +1,74 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo:{
+
+typeNamePlural: 'Travels',
+title.value: 'TravelId',
+description.value: 'Description'
+
+}
+
+annotate entity ZC_01_TravelTP with
+{
+
+  /* Facts */
+  @UI.facet: [{position: 10, type: #FIELDGROUP_REFERENCE, targetQualifier: 'DETAILS', label: 'Travel Details'},
+              {position: 20, type: #FIELDGROUP_REFERENCE, targetQualifier: 'ADMIN', label: 'Adminnistrative Data'}]
+
+
+  @UI.lineItem: [ { position: 10 } ] //Anzeige
+  @UI.fieldGroup: [ { position: 10, qualifier: 'DETAILS'} ]
+  TravelId;
+
+  @UI.lineItem: [ { position: 20 } ]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.fieldGroup: [ { position: 20, qualifier: 'DETAILS'} ]
+  AgencyId;
+
+  @UI.lineItem: [ { position: 30 } ]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.fieldGroup: [ { position: 30, qualifier: 'DETAILS'} ]
+  CustomerId;
+
+  @UI.lineItem: [ { position: 40 } ]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.fieldGroup: [ { position: 40, qualifier: 'DETAILS'} ]
+  BeginDate;
+
+  @UI.lineItem: [ { position: 50 } ]
+  @UI.selectionField: [{ position: 40 }]
+  @UI.fieldGroup: [ { position: 50, qualifier: 'DETAILS'} ]
+  EndDate;
+
+  @UI.fieldGroup: [ { position: 60, qualifier: 'DETAILS'} ]
+  BookingFee;
+
+  @UI.lineItem: [ { position: 60 } ]
+  @UI.selectionField: [{ position: 50 }]
+  @UI.fieldGroup: [ { position: 70, qualifier: 'DETAILS'} ]
+  TotalPrice;
+
+  //  CurrencyCode;
+
+  @UI.lineItem: [ { position: 70 } ]
+  @UI.fieldGroup: [ { position: 80, qualifier: 'DETAILS'} ]
+  Description;
+
+  @UI.lineItem: [ { position: 80 } ]
+  @UI.selectionField: [{ position: 60 }]
+  @UI.fieldGroup: [ { position: 90, qualifier: 'DETAILS'} ]
+  Status;
+
+  @UI.fieldGroup: [ { position: 10, qualifier: 'ADMIN'} ]
+  CreatedBy;
+
+  @UI.fieldGroup: [ { position: 20, qualifier: 'ADMIN'} ]
+  CreatedAt;
+
+  @UI.fieldGroup: [ { position: 30, qualifier: 'ADMIN'} ]
+  LastChangedBy;
+
+  @UI.fieldGroup: [ { position: 40, qualifier: 'ADMIN'} ]
+  LastChangedAt;
+
+}
