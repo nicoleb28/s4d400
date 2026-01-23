@@ -1,8 +1,10 @@
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'ABAP-CDS-05'
-@Metadata.ignorePropagatedAnnotations: true
-define view entity Z01_CustomerKPIs
+
+define view entity Z01_CustomerKPIs 
+  with parameters
+    P_City : /dmo/city
   as select from Z01_TravelWithCustomer
 {
   key CustomerId,
@@ -18,6 +20,9 @@ define view entity Z01_CustomerKPIs
       count( distinct AgencyId )      as NumberOfDifferentAgencyIds
 
 }
+
+where
+  City = $parameters.P_City
 
 group by
   CustomerId,

@@ -15,3 +15,4 @@ define view entity Z01_Customer
       city         as City,
       country_code as CountryCode
 }
+

@@ -5,18 +5,25 @@
 typeNamePlural: 'Travels',
 title.value: 'TravelId',
 description.value: 'Description'
-
 }
+
+@UI.lineItem: [ {  criticality: 'StatusCriticality'}]
+@UI.presentationVariant: [ { sortOrder: [{ by: 'BeginDate', direction: #DESC},
+                                         { by: 'BeginDate', direction: #DESC }] }]
 
 annotate entity ZC_01_TravelTP with
 {
 
   /* Facts */
   @UI.facet: [{position: 10, type: #FIELDGROUP_REFERENCE, targetQualifier: 'DETAILS', label: 'Travel Details'},
-              {position: 20, type: #FIELDGROUP_REFERENCE, targetQualifier: 'ADMIN', label: 'Adminnistrative Data'}]
+              {position: 20, type: #FIELDGROUP_REFERENCE, targetQualifier: 'ADMIN', label: 'Adminnistrative Data'},
+              {position: 30, type: #LINEITEM_REFERENCE, targetElement: '_Bookings', label: 'Bookings'}]
 
+  /* Actions */
 
-  @UI.lineItem: [ { position: 10 } ] //Anzeige
+  @UI.identification: [ { position: 10 }, { position: 10,  type: #FOR_ACTION, label: 'Cancel Travel', dataAction: 'CancelTravel'} ]
+  @UI.lineItem: [ { position: 10 }, { position: 10,  type: #FOR_ACTION, label: 'Cancel Travel', dataAction: 'CancelTravel'} ]
+  /* Fields */
   @UI.fieldGroup: [ { position: 10, qualifier: 'DETAILS'} ]
   TravelId;
 
@@ -54,9 +61,12 @@ annotate entity ZC_01_TravelTP with
   @UI.fieldGroup: [ { position: 80, qualifier: 'DETAILS'} ]
   Description;
 
-  @UI.lineItem: [ { position: 80 } ]
-  @UI.selectionField: [{ position: 60 }]
-  @UI.fieldGroup: [ { position: 90, qualifier: 'DETAILS'} ]
+  @UI.fieldGroup: [ { position: 90,
+                        qualifier: 'Details',
+                        criticality: 'StatusCriticality',
+                        criticalityRepresentation: #WITHOUT_ICON } ]
+  @UI.lineItem: [ { position: 80, criticality: 'StatusCriticality', criticalityRepresentation: #WITHOUT_ICON } ]
+  @UI.selectionField: [ { position: 60 } ]
   Status;
 
   @UI.fieldGroup: [ { position: 10, qualifier: 'ADMIN'} ]
@@ -70,5 +80,8 @@ annotate entity ZC_01_TravelTP with
 
   @UI.fieldGroup: [ { position: 40, qualifier: 'ADMIN'} ]
   LastChangedAt;
+
+  @UI.hidden: true
+  StatusCriticality;
 
 }

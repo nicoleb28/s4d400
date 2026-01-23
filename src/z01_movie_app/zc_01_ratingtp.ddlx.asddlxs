@@ -1,0 +1,36 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo:{
+
+typeNamePlural: 'Ratings',
+title.value: 'Rating',
+description.value: 'UserName'
+}
+
+@UI.presentationVariant: [ { sortOrder: [{ by: 'RatingDate', direction: #DESC},
+                                         { by: 'UserName', direction: #ASC }] }]
+annotate entity ZC_01_RatingTP with
+{
+
+  @UI.facet: [{position: 10, type: #FIELDGROUP_REFERENCE, targetQualifier: 'DETAILS', label: 'Rating Details'},
+                {position: 20, type: #FIELDGROUP_REFERENCE, targetQualifier: 'ADMIN', label: 'Adminnistrative Data'},
+                {position: 30, type: #LINEITEM_REFERENCE, targetElement: '_Movie', label: 'Movie'}]
+
+  @UI.fieldGroup: [ { position: 10, qualifier: 'ADMIN'} ]
+  RatingUuid;
+
+  @UI.fieldGroup: [ { position: 20, qualifier: 'ADMIN'} ]
+  MovieUuid;
+
+  @UI.lineItem: [ { position: 10 } ]
+  @UI.fieldGroup: [ { position: 10, qualifier: 'DETAILS'} ]
+  UserName;
+
+ @UI.fieldGroup: [ { position: 10, qualifier: 'DETAILS'} ]
+  Rating;
+
+  @UI.fieldGroup: [ { position: 30, qualifier: 'ADMIN'} ]
+  RatingDate;
+
+
+}
